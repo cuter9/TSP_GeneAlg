@@ -60,6 +60,7 @@ def solve_multi_run(self, no_run):
     ax.text(0.4, 0.75, text_box, transform=ax.transAxes, fontsize=10,
             verticalalignment='bottom', bbox=props)
     plt.title('Convergence Plot of GA search', fontsize=16)
+    plt.savefig('results/convergence_plot.pdf', format='pdf')
     plt.show()
 
 

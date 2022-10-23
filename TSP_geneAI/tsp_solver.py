@@ -4,7 +4,7 @@ from examples.world_cities import cities_of, create_graph_of
 from solve import *
 
 
-no_run = 10      # the no of GA search runs
+no_run = 2      # the no of GA search runs
 city_id = 2         # select the cities for tour search
 state = ''
 match city_id:
