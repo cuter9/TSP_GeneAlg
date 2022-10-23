@@ -83,12 +83,10 @@ def solve_1(self):
 
     :return: None
     """
-    self.mean_fitness = []
-    self.max_fitness = []
-    # start_time = datetime.datetime.now()
+
     start_time = time.process_time()
-    mean_fitness = np.ndarray(shape=(1, 0))
-    max_fitness = np.ndarray(shape=(1, 0))
+    self.mean_fitness = np.ndarray(shape=(1, 0))
+    self.max_fitness = np.ndarray(shape=(1, 0))
 
     # initialize the population
     population = self.initialize_population()
@@ -150,10 +148,8 @@ def solve_1(self):
         self.plot_fitness_results(self.mean_fitness, self.max_fitness, gen_n)
 
     if self.show_stats:
-        # end_time = datetime.datetime.now()
         end_time = time.process_time()
 
-        # self.time_str = get_elapsed_time(start_time, end_time)
         self.time_str = round(end_time - start_time, 2)
 
         self.print_stats(self.time_str)

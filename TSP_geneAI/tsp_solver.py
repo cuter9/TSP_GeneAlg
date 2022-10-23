@@ -1,13 +1,10 @@
 from geneal.applications.tsp.travelling_salesman_problem import TravellingSalesmanProblemSolver
-# from geneal.applications.tsp.examples.world_capitals.graph import G
 from geneal.applications.tsp.helpers import plot_cities
-# from geneal.applications.tsp.examples.world_capitals import world_capitals_dict
 from examples.world_cities import cities_of, create_graph_of
-# from examples.world_cities.graph import create_graph_of
-import solve
+from solve import *
 
 
-no_run = 1      # the no of GA search runs
+no_run = 10      # the no of GA search runs
 city_id = 2         # select the cities for tour search
 state = ''
 match city_id:
@@ -49,8 +46,6 @@ tsp_solver = TravellingSalesmanProblemSolver(
 
 # tsp_solver.solve()  # use this for just one run
 tsp_solver.solve_multi_run(no_run)      # use this when run solver more than 1 times
-
-# tsp_solver.plot_fitness_results(tsp_solver.mean_fitness, tsp_solver.max_fitness, tsp_solver.gen_n)
 
 plot_cities(world_cities_dict, tsp_solver,
             lon=lambda x: x['lng'], lat=lambda x: x['lat'],
