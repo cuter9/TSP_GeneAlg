@@ -6,6 +6,8 @@ from examples.world_cities import cities_of, create_graph_of
 # from examples.world_cities.graph import create_graph_of
 import solve
 
+
+no_run = 1      # the no of GA search runs
 city_id = 2         # select the cities for tour search
 state = ''
 match city_id:
@@ -40,14 +42,13 @@ tsp_solver = TravellingSalesmanProblemSolver(
     pop_size=500,  # population size (number of individuals)
     max_gen=200,  # maximum number of generations
     mutation_rate=0.01,  # mutation rate to apply to the population
-    selection_rate=0.5,  # percentage of the population to select for mating
+    selection_rate=0.7,  # percentage of the population to select for mating
     selection_strategy='roulette_wheel',  # strategy to use for selection.
     mutation_strategy='random_swap'  # strategy to use for mutation. see below for more details.
 )
 
-# tsp_solver.solve()
-no_run = 2
-tsp_solver.solve_multi_run(no_run)
+# tsp_solver.solve()  # use this for just one run
+tsp_solver.solve_multi_run(no_run)      # use this when run solver more than 1 times
 
 # tsp_solver.plot_fitness_results(tsp_solver.mean_fitness, tsp_solver.max_fitness, tsp_solver.gen_n)
 

@@ -1,4 +1,4 @@
-import datetime
+import time
 import logging
 
 import numpy as np
@@ -31,28 +31,48 @@ def solve_multi_run(self, no_run):
     self.best_fitness_ = best_fitness
     for n in range(no_run):
         if n == self.n_best_run:
+            line_label_mean = 'Best mean fitness'
+            line_label_max = "Best max fitness"
             color_mean = 'blue'
             color_max = 'red'
             line_style = 'solid'
             line_width = 1
         else:
-            color_mean = 'blue'
-            color_max = 'red'
+            line_label_mean = 'mean fitness'
+            line_label_max = "max fitness"
+            color_mean = 'green'
+            color_max = 'cyan'
             line_style = 'dotted'
             line_width = 1
 
         plot_fitness_results_1(self.mean_fitness_pop[n], self.max_fitness_pop[n], self.gen_n,
-                               ax, color_mean, color_max, line_style, line_width)
+                               ax, color_mean, color_max, line_style, line_width,
+                               line_label_mean, line_label_max)
 
+    text_box = "Total running time:" + str(self.time_str) + 'sec.' + \
+               "\n Population size: " + str(self.pop_size) + \
+               "\n Number of cities: " + str(self.n_genes) + \
+               "\n Selection rate: " + str(self.selection_rate) + \
+               "\n Mutation rate: " + str(self.mutation_rate) + \
+               "\n Number Generations: " + str(self.generations_) + \
+               "\n Best fitness: " + str(-self.best_fitness_) + ' km'
+    props = dict(boxstyle='round', facecolor='yellow', alpha=0.9)
+    ax.text(0.4, 0.75, text_box, transform=ax.transAxes, fontsize=10,
+            verticalalignment='bottom', bbox=props)
+    plt.title('Convergence Plot of GA search', fontsize=16)
     plt.show()
 
 
-def plot_fitness_results_1(mean_fitness, max_fitness, iterations, ax, color_mean, color_max, line_style, line_width):
+def plot_fitness_results_1(mean_fitness, max_fitness, iterations,
+                           ax, color_mean, color_max, line_style, line_width,
+                           line_label_mean, line_label_max):
     x = np.arange(1, iterations + 1)
-    ax.plot(x, mean_fitness, label="mean fitness", color=color_mean, linestyle=line_style, linewidth=line_width)
-    ax.plot(x, max_fitness, label="max fitness", color=color_max, linestyle=line_style, linewidth=line_width)
+    ax.plot(x, -mean_fitness, label=line_label_mean,
+            color=color_mean, linestyle=line_style, linewidth=line_width)
+    ax.plot(x, -max_fitness, label=line_label_max,
+            color=color_max, linestyle=line_style, linewidth=line_width)
 
-    plt.legend()
+    plt.legend(loc='upper right', fontsize=10)
     # plt.show()
 
 
@@ -65,8 +85,8 @@ def solve_1(self):
     """
     self.mean_fitness = []
     self.max_fitness = []
-    start_time = datetime.datetime.now()
-
+    # start_time = datetime.datetime.now()
+    start_time = time.process_time()
     mean_fitness = np.ndarray(shape=(1, 0))
     max_fitness = np.ndarray(shape=(1, 0))
 
@@ -130,11 +150,13 @@ def solve_1(self):
         self.plot_fitness_results(self.mean_fitness, self.max_fitness, gen_n)
 
     if self.show_stats:
-        end_time = datetime.datetime.now()
+        # end_time = datetime.datetime.now()
+        end_time = time.process_time()
 
-        time_str = get_elapsed_time(start_time, end_time)
+        # self.time_str = get_elapsed_time(start_time, end_time)
+        self.time_str = round(end_time - start_time, 2)
 
-        self.print_stats(time_str)
+        self.print_stats(self.time_str)
 
 
 # add solve_multi_run method to allow mult running the solve_1
