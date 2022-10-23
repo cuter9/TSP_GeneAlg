@@ -11,7 +11,10 @@ A. 本程式利用Python 軟體套件 geneal 執行旅行業務員問題(Travell
       (6) 遺傳代數(max_gen)
 
 B. 執行本程式需先安裝的PYPI套件:
-   1. geneal 
-   2. turfpy
-   3. pandas
-
+   1. numpy
+   2. geneal 
+   3. turfpy
+   4. pandas
+   5. plotly
+   6. numba
+   7. matplotlib
