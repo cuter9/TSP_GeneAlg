@@ -13,20 +13,23 @@ from geneal.genetic_algorithms.genetic_algorithm_base import GenAlgSolver
 
 def solve_multi_run(self, no_run):
     self.plot_results = False
-    self.mean_fitness_pop = []
-    self.max_fitness_pop = []
+    self.mean_fitness_gen = []
+    self.max_fitness_gen = []
+    self.time_str_gen = []
     fig = plt.figure(figsize=(10, 7))
     ax = fig.add_subplot(1, 1, 1)
     best_fitness = float("-inf")
     best_individual = None
     for i in range(no_run):
         solve_1(self)
-        self.mean_fitness_pop.append(self.mean_fitness)
-        self.max_fitness_pop.append(self.mean_fitness)
+        self.mean_fitness_gen.append(self.mean_fitness)
+        self.max_fitness_gen.append(self.mean_fitness)
         if best_fitness < self.best_fitness_:
             best_fitness = self.best_fitness_
             best_individual = self.best_individual_
             self.n_best_run = i
+        self.time_str_gen.append(self.time_str)
+    self.time_avg = np.mean(self.time_str_gen)
     self.best_individual_ = best_individual
     self.best_fitness_ = best_fitness
     for n in range(no_run):
@@ -45,11 +48,12 @@ def solve_multi_run(self, no_run):
             line_style = 'dotted'
             line_width = 1
 
-        plot_fitness_results_1(self.mean_fitness_pop[n], self.max_fitness_pop[n], self.gen_n,
+        plot_fitness_results_1(self.mean_fitness_gen[n], self.max_fitness_gen[n], self.gen_n,
                                ax, color_mean, color_max, line_style, line_width,
                                line_label_mean, line_label_max)
 
-    text_box = "Total running time:" + str(self.time_str) + 'sec.' + \
+    text_box = "max running time:" + str(np.max(self.time_str_gen)) + 'sec.' + \
+               "\n mean running time: " + str(self.time_avg) + 'sec' + \
                "\n Population size: " + str(self.pop_size) + \
                "\n Number of cities: " + str(self.n_genes) + \
                "\n Selection rate: " + str(self.selection_rate) + \
@@ -85,7 +89,6 @@ def solve_1(self):
     :return: None
     """
 
-    start_time = time.process_time()
     self.mean_fitness = np.ndarray(shape=(1, 0))
     self.max_fitness = np.ndarray(shape=(1, 0))
 
@@ -99,6 +102,7 @@ def solve_1(self):
     gen_interval = max(round(self.max_gen / 10), 1)
 
     gen_n = 0
+    start_time = time.process_time()
     while True:
 
         gen_n += 1
@@ -139,6 +143,8 @@ def solve_1(self):
             self.gen_n = gen_n
             break
 
+    end_time = time.process_time()
+    self.time_str = round(end_time - start_time, 2)
     self.generations_ = gen_n
     self.best_individual_ = population[0, :]
     self.best_fitness_ = fitness[0]
@@ -149,10 +155,6 @@ def solve_1(self):
         self.plot_fitness_results(self.mean_fitness, self.max_fitness, gen_n)
 
     if self.show_stats:
-        end_time = time.process_time()
-
-        self.time_str = round(end_time - start_time, 2)
-
         self.print_stats(self.time_str)
 
 
