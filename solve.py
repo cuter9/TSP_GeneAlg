@@ -9,6 +9,8 @@ from geneal.utils.exceptions_messages import exception_messages
 from geneal.utils.helpers import get_elapsed_time
 from geneal.utils.logger import configure_logger
 from geneal.genetic_algorithms.genetic_algorithm_base import GenAlgSolver
+
+
 # from utilities import dash_plot
 
 def solve_multi_run(self, no_run):
