@@ -4,7 +4,7 @@ from examples.world_cities import cities_of, create_graph_of
 from solve import *
 
 
-no_run = 5      # the no of GA search runs
+no_run = 10      # the no of GA search runs
 city_id = 2         # select the cities for tour search
 state = ''
 match city_id:
@@ -36,10 +36,10 @@ G = create_graph_of(world_cities_dict)
 #                       'worst_gene_random', 'worst_gene_nearest_neighbour', 'select_any_mutation'
 tsp_solver = TravellingSalesmanProblemSolver(
     graph=G,
-    pop_size=500,  # population size (number of individuals)
-    max_gen=200,  # maximum number of generations
+    pop_size=300,  # population size (number of individuals)
+    max_gen=400,  # maximum number of generations
     mutation_rate=0.01,  # mutation rate to apply to the population
-    selection_rate=0.7,  # percentage of the population to select for mating
+    selection_rate=0.5,  # percentage of the population to select for mating
     selection_strategy='roulette_wheel',  # strategy to use for selection.
     mutation_strategy='random_swap'  # strategy to use for mutation. see below for more details.
 )
